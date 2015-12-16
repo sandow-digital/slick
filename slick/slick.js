@@ -1507,12 +1507,12 @@
     Slick.prototype.progressiveLazyLoad = function() {
 
         var _ = this,
-            imgCount, targetImage;
-
-        imgCount = $('img[data-lazy]', _.$slider).length;
+            $unloadedImages, imgCount, targetImage;
+        $unloadedImages = $('img[data-lazy]', _.$slider)
+        imgCount = $unloadedImages.length;
 
         if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
+            targetImage = (imgCount > _.currentSlide + 1) ? $unloadedImages.eq(_.currentSlide + 1) : $unloadedImages.first();
             targetImage.attr('src', null);
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                     targetImage.removeAttr('data-lazy');
